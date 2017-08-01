@@ -3,6 +3,8 @@ var http = require('http');
 var downloadableAPI = require('url-valid');
 var fs = require('fs');
 
+var fileNameUtil = require('./utils/fileName');
+
 function downloadAPI(url0) {
 
   var downloadlink = url0
@@ -40,17 +42,8 @@ function downloadAPI(url0) {
     return this
   }
 
-  function removeStringAfterMp4(name){
-    return name.substring(0, name.indexOf('mp4')+3)
-  }
-
-  function getUrlFileName(url) {
-    var getName = url.split('/').pop()
-    return removeStringAfterMp4(getName)
-  }
 
   function isHttps(url) {
-
     if (url.indexOf("http://") == 0){
       return 0;
     }
@@ -60,7 +53,6 @@ function downloadAPI(url0) {
     else{
       return -1;
     }
-
   }
 
 
@@ -88,7 +80,7 @@ function downloadAPI(url0) {
 
         if(!isStart) reject ({errMsg: errMsg})
 
-        var filename = getUrlFileName(downloadlink)
+        var filename = fileNameUtil.urlFileName(downloadlink)
 
         var dist = path + "/" +filename
       
@@ -132,8 +124,7 @@ function downloadAPI(url0) {
     start: triggerDownload,
     isHttps: isHttps,
     isDownloadable: isDownloadable,
-    setPath: setPath,
-    getUrlFileName: getUrlFileName
+    setPath: setPath
   }
 }
 

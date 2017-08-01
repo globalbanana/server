@@ -7,7 +7,7 @@ Dockerfile
 setEnvVal.sh
 env.sh
 download/*
-
+config.json
 
 # Runtime data
 pids
