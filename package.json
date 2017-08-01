@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/jest/bin/jest.js  --coverage",
-    "test:watch": "./node_modules/jest/bin/jest.js --watchAll #runs all tests  --cache "
+    "test": "standard --fix && ./node_modules/jest/bin/jest.js  --coverage",
+    "test:watch": "standard --fix && ./node_modules/jest/bin/jest.js --watchAll #runs all tests  --cache ",
+    "lint:fix": "standard --fix",
+    "lint": "standard"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,19 @@
   },
   "devDependencies": {
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
-    "jest": "^20.0.4"
+    "jest": "^20.0.4",
+    "standard": "^10.0.2"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "context",
+      "before",
+      "beforeEach",
+      "after",
+      "afterEach",
+      "it",
+      "expect"
+    ]
   }
 }
