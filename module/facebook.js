@@ -15,6 +15,16 @@ export function getAccessToken (x) {
   })
 }
 
+
+/**
+ * getVideoList
+ * @param {String} pageId 
+ * @return {Array}  
+ * [{ description: '...',
+    updated_time: '2017-08-01T12:02:34+0000',
+    id: '...' }]
+ */
+
 export function getVideoList (pageId) {
   const accessToken = process.env.GRAPHAPI_ACCESS_TOKEN
   const url = `https://graph.facebook.com/v2.9/${pageId}?fields=videos&access_token=${accessToken}`
@@ -25,7 +35,6 @@ export function getVideoList (pageId) {
     return resultJson.videos.data
   })
 }
-
 
 export function getVideoDetail (videoId) {
   const accessToken = process.env.GRAPHAPI_ACCESS_TOKEN

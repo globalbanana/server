@@ -1,6 +1,9 @@
 
 // with options
 {
+  "presets": [
+    "node6"
+  ],
   "plugins": [
     ["transform-es2015-modules-commonjs", {
       "allowTopLevelThis": true

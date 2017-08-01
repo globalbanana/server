@@ -1,7 +1,6 @@
 import {getAccessToken, getVideoList, getVideoDetail} from '../module/facebook'
 
 describe('Facebook module', () => {
-
   let _videoId = ''
 
   it('GET AccessToken', (done) => {
