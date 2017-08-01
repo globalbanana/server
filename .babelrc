@@ -1,0 +1,9 @@
+
+// with options
+{
+  "plugins": [
+    ["transform-es2015-modules-commonjs", {
+      "allowTopLevelThis": true
+    }]
+  ]
+}

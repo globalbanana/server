@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/jest/bin/jest.js  --coverage",
+    "test:watch": "./node_modules/jest/bin/jest.js --watchAll #runs all tests  --cache "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/globalbanana/server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/globalbanana/server/issues"
+  },
+  "homepage": "https://github.com/globalbanana/server#readme",
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "jest": "^20.0.4"
+  }
+}
