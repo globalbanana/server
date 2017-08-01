@@ -15,11 +15,10 @@ export function getAccessToken (x) {
   })
 }
 
-
 /**
  * getVideoList
- * @param {String} pageId 
- * @return {Array}  
+ * @param {String} pageId
+ * @return {Array}
  * [{ description: '...',
     updated_time: '2017-08-01T12:02:34+0000',
     id: '...' }]
