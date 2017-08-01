@@ -23,7 +23,6 @@ export function getAccessToken (x) {
     updated_time: '2017-08-01T12:02:34+0000',
     id: '...' }]
  */
-
 export function getVideoList (pageId) {
   const accessToken = process.env.GRAPHAPI_ACCESS_TOKEN
   const url = `https://graph.facebook.com/v2.9/${pageId}?fields=videos&access_token=${accessToken}`
@@ -44,4 +43,27 @@ export function getVideoDetail (videoId) {
   ).then(resultJson => {
     return resultJson
   })
+}
+
+/**
+ * getVideoDetailList
+ * @param {String} pageId
+ * @return {Array}
+ * [{ description: 'string',
+    updated_time: '2017-07-31T03:00:00+0000',
+    id: 'string',
+    source:'string']
+ */
+export async function getVideoDetailList (pageId) {
+  const videoList = await getVideoList(pageId)
+
+  for (let i = 0; i < videoList.length; i++) {
+  // for (let i = 0; i < videoList.length; i++) {
+    const videoObj = videoList[i]
+    const postId = videoObj.id
+    const detail = await getVideoDetail(postId)
+    videoObj.source = detail.source
+  }
+
+  return videoList
 }
