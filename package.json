@@ -25,7 +25,8 @@
     "babel-cli": "^6.24.1",
     "babel-preset-node6": "^11.0.0",
     "download-url": "^2.0.0",
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "mongoose": "^4.11.5"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
