@@ -1,7 +1,38 @@
 import fetch from 'isomorphic-fetch'
+import {Facebook, FacebookApiException} from 'fb';
+const FB = new Facebook({
+  version: 'v2.10',
+  appId: process.env.GRAPHAPI_CLIENT_ID,
+  appSecret: process.env.GRAPHAPI_SECRET
+});
 
 const clientId = process.env.GRAPHAPI_CLIENT_ID
 const secret = process.env.GRAPHAPI_SECRET
+
+export default function post (pageId, options = {}) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const token = await getAccessToken();
+      FB.api(`/${pageId}/feed`, 'POST', options, (res) => {
+        if(!res || res.error) {
+          console.log(!res ? 'error occurred' : res.error);
+          return;
+        }
+        res0 = JSON.parse(res[0].body);
+ 
+        if (res0.error) {
+          console.log(res0.error);
+        } else {
+          console.log('Post Id: ' + res0.id);
+        }
+        resolve(res0);
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 
 export function getAccessToken (x) {
   const url = `https://graph.facebook.com/oauth/access_token?client_id=${clientId}&client_secret=${secret}&grant_type=client_credentials`
