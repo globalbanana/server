@@ -1,3 +1,4 @@
+import {create} from './video';
 const mongoose = require('mongoose')
 
 export function initDB () {
@@ -9,3 +10,5 @@ export function initDB () {
     )
   global.DBInstance = mongoose
 }
+
+export { create as videoCreate }
