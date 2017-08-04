@@ -14,7 +14,7 @@ const uploadParams = {Bucket: bucketName, Key: '', Body: '', ACL: 'public-read'}
  * @param {String} file -- path of localFile
  * @return {String} -- download link
  */
-var _uploadLocalFile = function (file) {
+export function uploadLocalFile (file) {
   return new Promise(function (resolve, reject) {
     var fs = require('fs')
     var fileStream = fs.createReadStream(file)
@@ -37,8 +37,4 @@ var _uploadLocalFile = function (file) {
       }
     })
   })
-}
-
-module.exports = {
-  uploadLocalFile: _uploadLocalFile
 }

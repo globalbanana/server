@@ -3,7 +3,7 @@ import {getAccessToken, getVideoDetailList} from './module/facebook'
 const downloadHelp = require('./module/downloadHelp')
 const fileNameHelp = require('./module/utils/fileName')
 const fileHelp = require('./module/fileHelp')
-const s3 = require('./module/s3');
+import {uploadLocalFile} from './module/s3'
 
 (async function () {
   await getAccessToken()
@@ -22,7 +22,7 @@ const s3 = require('./module/s3');
 
     await downloadHelp(link).setPath(path).start()
     console.log(`${i} : is downloaded`)
-    await s3.uploadLocalFile(`${path}/${fileName}`)
+    await uploadLocalFile(`${path}/${fileName}`)
     console.log(`${i} : is uploaded to S3`)
     await fileHelp.delete(`${path}/${fileName}`)
     console.log(`${i} : is locally delete`)
