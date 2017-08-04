@@ -6,7 +6,7 @@
   "scripts": {
     "crawler": "./node_modules/babel-cli/bin/babel-node.js --presets node6 crawler.js",
     "test": "./node_modules/jest/bin/jest.js  --coverage",
-    "test:watch": "./node_modules/jest/bin/jest.js --watchAll #runs all tests  --cache ",
+    "test:watch": "standard --fix && ./node_modules/jest/bin/jest.js --watchAll #runs all tests  --cache ",
     "lint:fix": "standard --fix",
     "lint": "standard"
   },

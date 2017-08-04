@@ -1,57 +1,44 @@
 
-var https = require('https');
-var http = require('http');
+const AWS = require('aws-sdk')
+const awsConfig = require('../config.json')
+AWS.config.loadFromPath('./config.json')
 
-var AWS = require('aws-sdk');
-var awsConfig = require('../config.json');
-AWS.config.loadFromPath('./config.json');
+const s3 = new AWS.S3({apiVersion: '2006-03-01'})
 
-var s3 = new AWS.S3({apiVersion: '2006-03-01'});
+const bucketName = awsConfig.bucketName
 
-var bucketName = awsConfig.bucketName
-
-
-var uploadParams = {Bucket: bucketName, Key: '', Body: '', ACL: 'public-read'};
-
+const uploadParams = {Bucket: bucketName, Key: '', Body: '', ACL: 'public-read'}
 
 /**
  * uploadLocalFile
  * @param {String} file -- path of localFile
  * @return {String} -- download link
  */
-var _uploadLocalFile = function(file){
-    return new Promise(function(resolve, reject){
-        var fs = require('fs');
-        var fileStream = fs.createReadStream(file);
-        fileStream.on('error', function(err) {
-            console.log('File Error', err);
-        });
-        uploadParams.Body = fileStream;
-
-        var path = require('path');
-
-        uploadParams.Key = path.basename(file);
-
-        s3.upload (uploadParams, function (err, data) {
-            if (err) {
-                console.log("Error", err);
-                reject(err)
-            } if (data) {
-                console.log("Upload Success", data.Location);
-                resolve(data.Location)
-            }
-        });
+var _uploadLocalFile = function (file) {
+  return new Promise(function (resolve, reject) {
+    var fs = require('fs')
+    var fileStream = fs.createReadStream(file)
+    fileStream.on('error', function (err) {
+      console.log('File Error', err)
     })
-}
+    uploadParams.Body = fileStream
 
+    var path = require('path')
 
-function setHttpRequest(url) {
-    if(isHttps(url) == 1) 
-        return https
-    else if(isHttps(url) == 0) 
-        return http
+    uploadParams.Key = path.basename(file)
+
+    s3.upload(uploadParams, function (err, data) {
+      if (err) {
+        console.log('Error', err)
+        reject(err)
+      } if (data) {
+        console.log('Upload Success', data.Location)
+        resolve(data.Location)
+      }
+    })
+  })
 }
 
 module.exports = {
-    uploadLocalFile : _uploadLocalFile
+  uploadLocalFile: _uploadLocalFile
 }
