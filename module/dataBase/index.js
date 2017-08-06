@@ -1,4 +1,4 @@
-import {create} from './video';
+import {create} from './video'
 const mongoose = require('mongoose')
 
 export function initDB () {

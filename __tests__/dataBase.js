@@ -9,9 +9,20 @@ describe('mongoose module', () => {
   })
 
   it('videoCreate()', (done) => {
-    videoCreate().then(
-        (res)=> {console.log('res: ', res)}
+    const payload = {
+      title: 'perter title',
+      description: 'perter description',
+      source: 'perter source',
+      s3Source: 'perter s3Source',
+      originPage: 'perter page',
+      likes: [{user: 'peter'},{user: 'rukeith'}],
+      videoLength: 1234,
+    }
+
+    videoCreate(payload).then(
+        (res) => { 
+          done()
+        }
     )
-    done()
   })
 })
