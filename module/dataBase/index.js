@@ -1,4 +1,4 @@
-import {create} from './video'
+import {create, getList, getDetail} from './video'
 const mongoose = require('mongoose')
 
 export function initDB () {
@@ -11,4 +11,8 @@ export function initDB () {
   global.DBInstance = mongoose
 }
 
-export { create as videoCreate }
+export {
+  create as videoCreate,
+  getList as videoList,
+  getDetail as videoDetail
+ }

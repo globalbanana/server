@@ -1,11 +1,11 @@
 const Schema = require('mongoose').Schema
 
-
 //* _*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 // Schema Definition
 //* _*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 var VideoObject = new Schema({
-  title: { type: String, required: true },
+  fbId: { type: String, required: true },
+  title: { type: String },
   description: { type: String, required: true },
   source: { type: String, required: true },
   s3Source: { type: String, required: true },
@@ -13,6 +13,7 @@ var VideoObject = new Schema({
   videoLength: { type: Object },
   rate: { type: Number },
   originPage: { type: String },
+  originThumb: { type: String },
   buff: Buffer
 })
 
@@ -27,13 +28,14 @@ VideoObject.pre('save', function (next) {
   next()
 })
 
-export function create (payload={}) {
-  return new Promise(async (resolve, reject) => {
+export function create (payload = {}) {
+  return new Promise((resolve, reject) => {
     const _mongoose = global.DBInstance
     const VideoInstance = _mongoose.model('Video', VideoObject)
     const instance = new VideoInstance()
-    const {title, originPage, description, source, s3Source, likes, videoLength} = payload
+    const {fbId, title, originPage, description, source, s3Source, likes, videoLength, originThumb} = payload
 
+    instance.fbId = fbId
     instance.title = title
     instance.description = description
     instance.source = source
@@ -41,12 +43,46 @@ export function create (payload={}) {
     instance.likes = likes
     instance.originPage = originPage
     instance.videoLength = videoLength
-    
+    instance.originThumb = originThumb
+
     instance.save(function (err, obj) {
       if (err) reject(err)
       else {
         resolve(obj)
       }
+    })
+  })
+}
+
+export function getList (payload = {}) {
+  return new Promise((resolve, reject) => {
+    const _mongoose = global.DBInstance
+
+    const {limit, skip} = payload
+
+    const _payload = {
+      limit: limit || 10,
+      skip: skip || 0
+    }
+
+    const Video = _mongoose.model('Video', VideoObject)
+    const query = Video.find({}, null, _payload)
+    query.exec(function (err, vObjList) {
+      if (err) reject(err)
+      resolve(vObjList)
+    })
+  })
+}
+
+export function getDetail (id) {
+  return new Promise((resolve, reject) => {
+    const _mongoose = global.DBInstance
+
+    const Video = _mongoose.model('Video', VideoObject)
+    const query = Video.findOne({id})
+    query.exec(function (err, vObj) {
+      if (err) reject(err)
+      resolve(vObj)
     })
   })
 }
