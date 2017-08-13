@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "crawler": "./node_modules/babel-cli/bin/babel-node.js --presets node6 crawler.js",
-    "test": "./node_modules/jest/bin/jest.js  --coverage",
+    "test": "NODE_ENV=development && source envDev.sh && ./node_modules/jest/bin/jest.js  --coverage",
     "test:watch": "./node_modules/jest/bin/jest.js --watchAll #runs all tests  --cache ",
     "lint:fix": "standard --fix",
     "lint": "standard"
@@ -23,6 +23,7 @@
   "dependencies": {
     "aws-sdk": "^2.93.0",
     "babel-cli": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-node6": "^11.0.0",
     "download-url": "^2.0.0",
     "fb": "^2.0.0",
@@ -33,6 +34,7 @@
     "babel-core": "^6.25.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
     "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-2": "^6.24.1",
     "jest": "^20.0.4",
     "standard": "^10.0.2"
   },

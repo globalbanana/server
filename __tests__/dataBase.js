@@ -1,6 +1,9 @@
-import {initDB, videoCreate, videoList, videoDetail} from '../module/dataBase'
+import {initDB, videoDelete, videoCreate, videoList, videoDetail, videoCount} from '../module/dataBase'
 
 describe('mongoose module', () => {
+
+  let deleteId = ''
+
   it('initDB', (done) => {
     //* username, password, url should be hidden as env variable
     initDB()
@@ -8,9 +11,14 @@ describe('mongoose module', () => {
     done()
   })
 
-  it.skip('videoCreate()', (done) => {
+  it('videoCreate()', (done) => {
     const payload = {
       fbId: 'perterObjId',
+      fbPageId: 'pageId',
+      newTitle: 'I am new title',
+      newDescription: 'I am new Description',
+      isReady: false,
+      publishedAt: null,
       title: 'perter title',
       description: 'perter description',
       source: 'perter source',
@@ -23,10 +31,21 @@ describe('mongoose module', () => {
 
     videoCreate(payload).then(
         (res) => {
+          deleteId = res._id
           done()
-        }
+        },
+        (err) => console.log(err)
     )
   })
+
+  it('videoDelete()', (done) => {
+    videoDelete(deleteId).then(
+      result => {
+        done()
+      }
+    )
+  })
+
 
   it('videoList()', (done) => {
     videoList().then(
@@ -44,6 +63,15 @@ describe('mongoose module', () => {
         expect(typeof result.source).toBe('string')
         expect(typeof result.description).toBe('string')
         expect(typeof result.fbId).toBe('string')
+        done()
+      }
+    )
+  })
+
+  it('videoCount()', (done) => {
+    videoCount().then(
+      result => {
+        expect(typeof result).toBe('number')
         done()
       }
     )
