@@ -17,7 +17,7 @@ var VideoObject = new Schema({
   likes: { type: Object },
   videoLength: { type: Object },
   rate: { type: Number },
-  originPage: { type: String },
+  fbPageName: { type: String },
   originThumb: { type: String },
   createdAt: { type: Date, default: Date.now },
   buff: Buffer

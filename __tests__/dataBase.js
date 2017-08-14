@@ -23,7 +23,7 @@ describe('mongoose module', () => {
       description: 'perter description',
       source: 'perter source',
       s3Source: 'perter s3Source',
-      originPage: 'perter page',
+      fbPageName: 'perter page',
       originThumb: ' peter originThumb',
       likes: [{user: 'peter'}, {user: 'rukeith'}],
       videoLength: 1234

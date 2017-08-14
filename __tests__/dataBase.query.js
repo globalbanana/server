@@ -61,16 +61,8 @@ describe('mongoose module', () => {
         (result) => {
             expect(result[1]._id).toBe(result[0]._id)
             done()
-
         }
     )
-
-    // videoList({}, field).then(
-    //   result => {
-    //     expect(result.length).toBe(2)
-    //     done()
-    //   }
-    // )
   })
 
 })

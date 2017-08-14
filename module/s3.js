@@ -32,7 +32,7 @@ export function uploadLocalFile (file) {
         console.log('Error', err)
         reject(err)
       } if (data) {
-        console.log('Upload Success', data.Location)
+        // console.log('Upload Success', data.Location)
         resolve(data.Location)
       }
     })
