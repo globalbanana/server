@@ -5,9 +5,11 @@ npm-debug.log*
 
 Dockerfile
 setEnvVal.sh
+envDev.sh
 env.sh
 download/*
 config.json
+pageId.json
 
 # Runtime data
 pids
