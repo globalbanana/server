@@ -1,10 +1,11 @@
 
 import {getAccessToken, getVideoList, getPageDetail} from './module/facebook';
 import {uploadLocalFile} from './module/s3';
-import {initDB, videoCreate} from './module/dataBase';
-const downloadHelp = require('./module/downloadHelp');
+import {initDB, videoCreate, videoList} from './module/dataBase';
+// const downloadHelp = require('./module/downloadHelp');
 const fileNameHelp = require('./module/utils/fileName');
 const fileHelp = require('./module/fileHelp');
+const downloadAPI = require('download-url');
 
 (async function () {
   initDB()
@@ -19,22 +20,27 @@ const fileHelp = require('./module/fileHelp');
   const fbPageName = pageObject.name
 
 
-  const videoList = await getVideoList(pageId)
+  const _list = await getVideoList(pageId)
 
   const path = './download'
 
-  for (let i = 0; i < videoList.length; i++) {
+  for (let i = 0; i < _list.length; i++) {
     try{
 
-        const videoObject = videoList[i]
+        const videoObject = _list[i]
         const {id, title, picture, description, source, likes, length} = videoObject
         const fileName = fileNameHelp.urlFileName(source)
         let s3Source = ''
 
-        console.log(`Downloading the ${i}th file: ${fileName} ......`)
-        await downloadHelp(source).setPath(path).start()
+        const isVObjExisted = (await videoList({}, {fbId: id})).length
 
-        console.log(`       Download is completed, going to upload :`)
+        if(isVObjExisted >0 ){
+          console.log('Video is already downloaded : SKIP: ')
+          continue
+        }
+
+        console.log(`Downloading the ${i}th file: ${fileName} ......`)
+        await (new downloadAPI(source)).setPath(path).start(fileName)
         s3Source = await uploadLocalFile(`${path}/${fileName}`)
         console.log(`       Uploaded is completed, going to delete: `, s3Source)
         await fileHelp.delete(`${path}/${fileName}`)
@@ -58,7 +64,7 @@ const fileHelp = require('./module/fileHelp');
     } 
     catch (err){
       console.error (err)
-      break
+      continue
     }
   }
 }())

@@ -15,7 +15,7 @@ const uploadParams = {Bucket: bucketName, Key: '', Body: '', ACL: 'public-read'}
  * @return {String} -- download link
  */
 export function uploadLocalFile (file) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {    
     var fs = require('fs')
     var fileStream = fs.createReadStream(file)
     fileStream.on('error', function (err) {
@@ -32,7 +32,6 @@ export function uploadLocalFile (file) {
         console.log('Error', err)
         reject(err)
       } if (data) {
-        // console.log('Upload Success', data.Location)
         resolve(data.Location)
       }
     })

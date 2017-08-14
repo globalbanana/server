@@ -8,7 +8,7 @@ var VideoObject = new Schema({
   fbPageId: { type: String, required: true },
   title: { type: String },
   newTitle: { type: String },
-  description: { type: String, required: true },
+  description: { type: String },
   newDescription: { type: String },
   publishedAt: { type: Date},
   isReady: { type: Boolean },
