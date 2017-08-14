@@ -67,20 +67,21 @@ export function getAccessToken (x) {
     updated_time: '2017-08-01T12:02:34+0000',
     id: '...' }]
  */
-export function getVideoList (pageId) {
+export function getVideoList (pageId, limit) {
   const accessToken = process.env.GRAPHAPI_ACCESS_TOKEN
-  const url = `https://graph.facebook.com/v2.9/${pageId}?fields=videos&access_token=${accessToken}`
+  const _limit = limit || 10
+  const url = `https://graph.facebook.com/v2.9/${pageId}/videos?fields=length,description,title,picture,source&limit=${_limit}&access_token=${accessToken}`
 
   return fetch(url).then(
       res => res.json()
   ).then(resultJson => {
-    return resultJson.videos.data
+    return resultJson.data
   })
 }
 
 export function getVideoDetail (videoId) {
   const accessToken = process.env.GRAPHAPI_ACCESS_TOKEN
-  const url = `https://graph.facebook.com/v2.9/${videoId}?fields=source&access_token=${accessToken}`
+  const url = `https://graph.facebook.com/v2.10/${videoId}?fields=source,picture&access_token=${accessToken}`
 
   return fetch(url).then(
       res => res.json()
@@ -96,7 +97,8 @@ export function getVideoDetail (videoId) {
  * [{ description: 'string',
     updated_time: '2017-07-31T03:00:00+0000',
     id: 'string',
-    source:'string']
+    source:'string'
+    picture:'string']
  */
 export async function getVideoDetailList (pageId) {
   const videoList = await getVideoList(pageId)
@@ -106,8 +108,21 @@ export async function getVideoDetailList (pageId) {
     const videoObj = videoList[i]
     const postId = videoObj.id
     const detail = await getVideoDetail(postId)
+    
     videoObj.source = detail.source
+    videoObj.picture = detail.picture
   }
 
   return videoList
+}
+
+export function getPageDetail (pageId) {
+  const accessToken = process.env.GRAPHAPI_ACCESS_TOKEN
+  const url = `https://graph.facebook.com/v2.9/${pageId}?fields=name,about,category,emails,fan_count,description&access_token=${accessToken}`
+
+  return fetch(url).then(
+      res => res.json()
+  ).then(resultJson => {
+    return resultJson
+  })
 }
