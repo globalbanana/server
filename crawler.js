@@ -38,6 +38,10 @@ const downloadAPI = require('download-url');
           console.log('Video is already downloaded : SKIP: ')
           continue
         }
+        if(length >1200 ){
+          console.log('Video is longer than 2min : SKIP: ')
+          continue
+        }
 
         console.log(`Downloading the ${i}th file: ${fileName} ......`)
         await (new downloadAPI(source)).setPath(path).start(fileName)
@@ -67,4 +71,6 @@ const downloadAPI = require('download-url');
       continue
     }
   }
+
+  process.exit()
 }())
