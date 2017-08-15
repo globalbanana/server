@@ -98,7 +98,7 @@ export function getDetail (id) {
     const _mongoose = global.DBInstance
 
     const Video = _mongoose.model('Video', VideoObject)
-    const query = Video.findOne({id})
+    const query = Video.findOne({_id: id})
     query.exec(function (err, vObj) {
       if (err) reject(err)
       resolve(vObj)
@@ -115,6 +115,18 @@ export function count () {
     Video.count({}, function (err, count) {  
       if (err) reject(err)
       resolve(count)
+    });
+  })
+}
+
+export function update (condition, payload) {
+  return new Promise((resolve, reject) => {
+    const _mongoose = global.DBInstance
+    const Video = _mongoose.model('Video', VideoObject)
+
+    Video.findOneAndUpdate(condition,  payload, function (err, vObj) {        
+      if (err) reject(err)
+      resolve()
     });
   })
 }
