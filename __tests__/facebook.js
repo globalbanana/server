@@ -1,4 +1,4 @@
-import {getAccessToken, getVideoList, getVideoDetail, getPageDetail} from '../module/facebook'
+import {getAccessToken, getVideoList, getVideoDetail, getPageDetail,videoPost} from '../module/facebook'
 
 describe('Facebook module', () => {
   let _videoId = ''
@@ -56,4 +56,26 @@ describe('Facebook module', () => {
       done()
     })
   })
+
+
+  it('post video', (done) => {
+    
+     const pageId = '1701611166801933'
+     const date = new Date();
+     const accessToken = "EAACl1H0CoZCwBAKX2HVg88eMV1h7KMRUeMjH9pjdUZBCeNeU34VJcV3RC0eICLB69E1ZCJrNhhHwcorujT9AKZCgIPFw1ESqDymQm74ptgL42k18sjOTw9fkxzDdw8UTFfrGvfGly6TwBg4wZBn2ZBlfQfFgx3pxxPdad6lyHvCCcrfRxW8YJ6PHEWYldsHRPX6HNSGM3tVAZDZD";
+     const payload = {
+               title: "title:" + date, 
+               description: "description:"+date,
+           }
+     videoPost(accessToken,
+               pageId, 
+               "https://banana-video.s3-ap-southeast-1.amazonaws.com/20653962_721942511324521_2724018935165878272_n.mp4",
+               payload
+              )
+              .then(result => {
+                  expect(typeof result.id).toBe('string')
+                  done()
+       })
+  })
+
 })

@@ -46,6 +46,26 @@ const secret = process.env.GRAPHAPI_SECRET
 //   });
 // }
 
+/**
+ * videoPost
+ * @param {String} accessToken
+ * @param {String} pageId
+ * @param {String} videoUrl
+ * @return {Array} key: title, description
+ */
+export function videoPost (accessToken, pageId, videoUrl, payload = {}) 
+{
+    const url = `https://graph.facebook.com/v2.10/${pageId}/videos?access_token=${accessToken}`;
+    payload["file_url"] = videoUrl
+    const option = {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {'Content-Type': 'application/json'}
+    }
+    return fetch(url, option)
+           .then(res => res.json())
+}
+
 export function getAccessToken (x) {
   const url = `https://graph.facebook.com/oauth/access_token?client_id=${clientId}&client_secret=${secret}&grant_type=client_credentials`
 
