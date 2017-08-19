@@ -1,51 +1,50 @@
 import fetch from 'isomorphic-fetch'
-import {Facebook, FacebookApiException} from 'fb';
-const FB = new Facebook({
-  version: 'v2.10',
-  appId: process.env.GRAPHAPI_CLIENT_ID,
-  appSecret: process.env.GRAPHAPI_SECRET
-});
-
 const clientId = process.env.GRAPHAPI_CLIENT_ID
 const secret = process.env.GRAPHAPI_SECRET
 
-/**
- * getVideoList
- * @param {String} pageId
- * @param {Object} options The video post's params
- * @param {String} options.title The video's title
- * @param {String} options.description The post's text
- * @param {String} options.file_url The vidoe's download url which facebook will upload to fan page
- * @param {Boolean} options.embeddable Allow user to embedda this post or not, default is false
- * @param {Boolean} options.social_actions This can be used to enable or prohibit the use of Facebook socialactions (likes, comments, and sharing) on an unlisted video. Default value is false
- * @param {String} options.thumb The video thumbnail raw data to be uploaded and associated with a video.
- * @param {Number} options.file_size The size of the entire video file in bytes.
- * @param {String} options.content_category Content category of this video.  {BEAUTY_FASHION, BUSINESS, CARS_TRUCKS, COMEDY, CUTE_ANIMALS, ENTERTAINMENT, FAMILY, FOOD_HEALTH, HOME, LIFESTYLE, MUSIC, NEWS, POLITICS, SCIENCE, SPORTS, TECHNOLOGY, VIDEO_GAMING, OTHER}
- * @return {Array}
- */
-export default function videoPost (pageId, options = {}) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const token = await getAccessToken();
-      FB.api(`/${pageId}/feed`, 'POST', options, (res) => {
-        if(!res || res.error) {
-          console.log(!res ? 'error occurred' : res.error);
-          return;
-        }
-        res0 = JSON.parse(res[0].body);
- 
-        if (res0.error) {
-          console.log(res0.error);
-        } else {
-          console.log('Post Id: ' + res0.id);
-        }
-        resolve(res0);
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
+// import {Facebook, FacebookApiException} from 'fb';
+// const FB = new Facebook({
+//   version: 'v2.10',
+//   appId: process.env.GRAPHAPI_CLIENT_ID,
+//   appSecret: process.env.GRAPHAPI_SECRET
+// });
+// /**
+//  * getVideoList
+//  * @param {String} pageId
+//  * @param {Object} options The video post's params
+//  * @param {String} options.title The video's title
+//  * @param {String} options.description The post's text
+//  * @param {String} options.file_url The vidoe's download url which facebook will upload to fan page
+//  * @param {Boolean} options.embeddable Allow user to embedda this post or not, default is false
+//  * @param {Boolean} options.social_actions This can be used to enable or prohibit the use of Facebook socialactions (likes, comments, and sharing) on an unlisted video. Default value is false
+//  * @param {String} options.thumb The video thumbnail raw data to be uploaded and associated with a video.
+//  * @param {Number} options.file_size The size of the entire video file in bytes.
+//  * @param {String} options.content_category Content category of this video.  {BEAUTY_FASHION, BUSINESS, CARS_TRUCKS, COMEDY, CUTE_ANIMALS, ENTERTAINMENT, FAMILY, FOOD_HEALTH, HOME, LIFESTYLE, MUSIC, NEWS, POLITICS, SCIENCE, SPORTS, TECHNOLOGY, VIDEO_GAMING, OTHER}
+//  * @return {Array}
+//  */
+// export default function videoPost (pageId, options = {}) {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       const token = await getAccessToken();
+//       FB.api(`/${pageId}/feed`, 'POST', options, (res) => {
+//         if(!res || res.error) {
+//           console.log(!res ? 'error occurred' : res.error);
+//           return;
+//         }
+//         res0 = JSON.parse(res[0].body);
+//  
+//         if (res0.error) {
+//           console.log(res0.error);
+//         } else {
+//           console.log('Post Id: ' + res0.id);
+//         }
+//         resolve(res0);
+//       });
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });
+// }
 
 export function getAccessToken (x) {
   const url = `https://graph.facebook.com/oauth/access_token?client_id=${clientId}&client_secret=${secret}&grant_type=client_credentials`
