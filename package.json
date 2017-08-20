@@ -27,7 +27,6 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-node6": "^11.0.0",
     "download-url": "^2.0.3",
-    "fb": "^2.0.0",
     "isomorphic-fetch": "^2.2.1",
     "mongoose": "^4.11.5"
   },
