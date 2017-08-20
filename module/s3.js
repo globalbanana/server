@@ -37,3 +37,29 @@ export function uploadLocalFile (file) {
     })
   })
 }
+
+
+
+/**
+ * uploadLocalFile
+ * @param {String} file -- path of localFile
+ * @return {String} -- download link
+ */
+export function deleteFile (fileName) {
+  return new Promise( (resolve, reject) => {
+
+    var params = {
+      Bucket: bucketName, 
+      Key: fileName
+     };
+     
+     s3.deleteObject(params, (err, data) => {
+      if (err) {
+        console.log('Error', err)
+        reject(err)
+      } if (data) {
+        resolve(data)
+      }
+    })
+  })
+}

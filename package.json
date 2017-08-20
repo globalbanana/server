@@ -36,6 +36,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.24.1",
     "jest": "^20.0.4",
+    "downloadable": "^1.0.0",    
     "standard": "^10.0.2"
   },
   "standard": {
