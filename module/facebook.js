@@ -63,7 +63,11 @@ export function videoPost (accessToken, pageId, videoUrl, payload = {})
         headers: {'Content-Type': 'application/json'}
     }
     return fetch(url, option)
-           .then(res => res.json())
+           .then(res => {
+             res.json()
+           },
+            err => console.error(err)
+          )
 }
 
 export function getAccessToken (x) {
@@ -86,16 +90,16 @@ export function getAccessToken (x) {
     updated_time: '2017-08-01T12:02:34+0000',
     id: '...' }]
  */
-export function getVideoList (pageId, limit) {
+export function getVideoList (pageId, limit = 10,  nextPage) {
+
+  
   const accessToken = process.env.GRAPHAPI_ACCESS_TOKEN
-  const _limit = limit || 10
-  const url = `https://graph.facebook.com/v2.9/${pageId}/videos?fields=length,description,title,picture,source&limit=${_limit}&access_token=${accessToken}`
+  const url = (nextPage)? nextPage
+              :`https://graph.facebook.com/v2.9/${pageId}/videos?fields=length,description,title,picture,source&limit=${limit}&access_token=${accessToken}`
 
   return fetch(url).then(
       res => res.json()
-  ).then(resultJson => {
-    return resultJson.data
-  })
+  )
 }
 
 export function getVideoDetail (videoId) {
