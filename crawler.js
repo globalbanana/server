@@ -30,9 +30,9 @@ const downloadAPI = require('download-url');
     const fbResponse = (fbNextPage)? 
             await getVideoList(null,null,fbNextPage)
             :await getVideoList(pageId, limit)
-    const fbVideoList = fbResponse.data
-    fbNextPage = fbResponse.paging.next
-
+    const fbVideoList = fbResponse.data || []
+    fbNextPage = (fbResponse.paging)?fbResponse.paging.next:null
+    
     for(let _video of fbVideoList){
       const {id, length} = _video;
       const isVObjExisted = (await videoList({}, {fbId: id})).length
