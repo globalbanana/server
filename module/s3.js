@@ -1,11 +1,8 @@
 
 const AWS = require('aws-sdk')
-const awsConfig = require('../config.json')
-AWS.config.loadFromPath('./config.json')
-
 const s3 = new AWS.S3({apiVersion: '2006-03-01'})
 
-const bucketName = awsConfig.bucketName
+const bucketName = process.env.AWS_BUCKET_NAME
 
 const uploadParams = {Bucket: bucketName, Key: '', Body: '', ACL: 'public-read'}
 
