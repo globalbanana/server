@@ -65,4 +65,15 @@ describe('mongoose module', () => {
     )
   })
 
+  it('Exist: videoList()', (done) => {
+    videoList({}, {}, {newTitle: false}).then(
+      result => {
+        result.forEach( obj=> {
+            expect(obj.newTitle).toBeUndefined()
+        })
+        done()
+      }
+    )
+  })
+
 })

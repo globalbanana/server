@@ -74,7 +74,7 @@ export function deleteById (id) {
   })
 }
 
-export function getList (payload = {}, field={}) {
+export function getList (payload = {}, field={}, exist={}) {
   return new Promise((resolve, reject) => {
     const _mongoose = global.DBInstance
 
@@ -87,6 +87,14 @@ export function getList (payload = {}, field={}) {
 
     const Video = _mongoose.model('Video', VideoObject)
     const query = Video.find(field, null, _payload)
+
+    Object.keys(exist).forEach(
+      (key) => {
+        query.where(key).exists(exist[key])
+      }
+    )
+
+
     query.exec(function (err, vObjList) {
       if (err) reject(err)
       resolve(vObjList)
