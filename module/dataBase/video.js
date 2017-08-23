@@ -14,6 +14,7 @@ var VideoObject = new Schema({
   isReady: { type: Boolean },
   source: { type: String, required: true },
   s3Source: { type: String, required: true },
+  editedSource: { type: String},
   likes: { type: Object },
   videoLength: { type: Object },
   rate: { type: Number },
