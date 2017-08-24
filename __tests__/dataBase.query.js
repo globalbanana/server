@@ -65,6 +65,27 @@ describe('mongoose module', () => {
     )
   })
 
+  it('Not Equal: videoList()', (done) => {
+
+    const field = {
+        status: {$ne : "DELETED"}
+    }
+
+    const payload = {
+        limit: 1000
+    }
+
+    videoList(payload, field).then(
+      result => {
+
+        result.forEach( obj=> {
+            expect(obj.status).not.toBe('DELETED')            
+        })
+        done()
+      }
+    )
+  })
+
   it('Exist: videoList()', (done) => {
     videoList({}, {}, {newTitle: false}).then(
       result => {
