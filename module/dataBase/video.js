@@ -33,6 +33,8 @@ var VideoObject = new Schema({
 // middleware
 VideoObject.pre('save', function (next) {
 //   notify(this.get('email'));
+  // console.log('pre findOneAndUpdate ....')
+  this.updatedAt = Date.now();
   next()
 })
 

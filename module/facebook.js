@@ -141,11 +141,9 @@ export async function getVideoDetailList (pageId) {
 
 export function getPageDetail (pageId) {
   const accessToken = process.env.GRAPHAPI_ACCESS_TOKEN
-  const url = `https://graph.facebook.com/v2.9/${pageId}?fields=name,about,category,emails,fan_count,description&access_token=${accessToken}`
+  const url = `https://graph.facebook.com/v2.9/${pageId}?fields=name,about,category,emails,fan_count,description,picture{url}&access_token=${accessToken}`
 
   return fetch(url).then(
       res => res.json()
-  ).then(resultJson => {
-    return resultJson
-  })
+  )
 }

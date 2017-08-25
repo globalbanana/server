@@ -53,6 +53,7 @@ describe('Facebook module', () => {
       expect(typeof detail.emails).toBe('object')
       expect(typeof detail.id).toBe('string')
       expect(typeof detail.description).toBe('string')
+      expect(typeof detail.picture.data).toBe('string')
       done()
     })
   })
