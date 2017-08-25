@@ -10,6 +10,7 @@ var VideoObject = new Schema({
   newTitle: { type: String },
   description: { type: String },
   newDescription: { type: String },
+  status: { type: String }, //READY, EDITING, PUBLISHED, DELETE  
   publishedAt: { type: Date},
   isReady: { type: Boolean },
   source: { type: String, required: true },
