@@ -1,4 +1,4 @@
-import {getAccessToken, getVideoList, getVideoDetail, getPageDetail,videoPost} from '../module/facebook'
+import {getAccessToken, getVideoList, getVideoDetail, getPageDetail, videoPost, getTokenUser} from '../module/facebook'
 
 describe('Facebook module', () => {
   let _videoId = ''
@@ -77,5 +77,16 @@ describe('Facebook module', () => {
                   done()
        })
   })
+
+  it('token', (done) => {
+    
+     const accessToken = "EAABjktqNhF8BAEUlGQeBpmJGtYE1UW23MXZCzk5JQefZBR7yJDyUtPSTQfCRCcVl5AhfvXwea6WwO1faEQmZCtv95sujXcP0ftJmzsUkfhS4nxM7VqtIapIm6vo7kHTZCvPpUbeMyBYhA4vZC5QDXreBdtpwh9pgveAZB0gDnabQwbpPZCp9ZCjQcfE9Xl3ZAYwQZD";
+     getTokenUser(accessToken)
+                 .then(result => {
+                    expect(typeof result.id).toBe('string')
+                    done()
+                 })
+  })
+
 
 })

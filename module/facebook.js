@@ -25,6 +25,19 @@ export function videoPost (accessToken, pageId, videoUrl, payload = {})
           )
 }
 
+/**
+ * getTokenUser
+ * @param {String} accessToken
+ */
+export function getTokenUser(accessToken)
+{
+    const url = `https://graph.facebook.com/v2.10/me?fields=id&access_token=${accessToken}`;
+    return fetch(url)
+        .then(res => res.json(),
+              err => console.error(err)
+             )
+}
+
 export function getAccessToken (x) {
   const url = `https://graph.facebook.com/oauth/access_token?client_id=${clientId}&client_secret=${secret}&grant_type=client_credentials`
 
