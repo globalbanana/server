@@ -64,10 +64,23 @@ export function videoPost (accessToken, pageId, videoUrl, payload = {})
     }
     return fetch(url, option)
            .then(res => {
-             res.json()
+             return res.json()
            },
             err => console.error(err)
           )
+}
+
+/**
+ * getTokenUser
+ * @param {String} accessToken
+ */
+export function getTokenUser(accessToken)
+{
+    const url = `https://graph.facebook.com/v2.10/me?fields=id&access_token=${accessToken}`;
+    return fetch(url)
+        .then(res => res.json(),
+              err => console.error(err)
+             )
 }
 
 export function getAccessToken (x) {
