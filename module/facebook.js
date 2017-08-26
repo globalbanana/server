@@ -106,3 +106,29 @@ export function isAdmin (accessToken) {
       return Promise.reject(false)
   })
 }
+
+
+/**
+ * extendToken
+ * @param {String} accessToken
+ * @return {Object}
+ * {access_token}
+ */
+export function extendToken (accessToken) {
+  
+    const clientId = process.env.GRAPHAPI_CLIENT_ID
+    const secret = process.env.GRAPHAPI_SECRET
+  
+    const query = queryString.stringify({
+      grant_type: 'fb_exchange_token',
+      client_id: clientId,
+      client_secret: secret,
+      fb_exchange_token: accessToken
+    })
+    const url = `https://graph.facebook.com/v2.10/oauth/access_token?${query}`
+  
+    return fetch(url).then(
+      res => res.json()
+    )
+  }
+  
