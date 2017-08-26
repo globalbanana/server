@@ -1,1 +1,0 @@
-postVideo: npm run postVideo
