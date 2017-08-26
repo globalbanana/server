@@ -10,8 +10,8 @@ import {initDB, videoList, videoUpdate} from './module/dataBase';
   const getPublishVideo =() => videoList({}, {status: 'READY'})
 
   const postVideoToFacebook = (_video) => {
-    const accessToken = 'EAABjktqNhF8BAF3tSknynNEqFFBpp5V0QzJh3gKJjvilLCpEGazIZAisAG1nsjpBeHT9g4rjSSq5KPd1zashVRZCjwlyBVTTzn54dga6SrN9sQukj6NGl4yIs3NdbeN32ZCuMZAwNVpna8UUQMWDIszDEN0IZBsxHK3ILlZCiwwtFRk2cENQUvWGdM78jbWD8ZD'
-    const pageId = '1701611166801933'
+    const accessToken = process.env.FB_ACCESS_TOKEN
+    const pageId = process.env.FB_PUBLISH_PAGE_ID
     const {title, newTitle, description, newDescription, originThumb, s3Source, editedSource} = _video
 
     const payload = {
