@@ -1,6 +1,6 @@
 
 import {getAccessToken, videoPost} from './module/facebook';
-import {initDB, videoList} from './module/dataBase';
+import {initDB, videoList, videoUpdate} from './module/dataBase';
 
 (async function () {
   initDB()
@@ -10,34 +10,35 @@ import {initDB, videoList} from './module/dataBase';
   const getPublishVideo =() => videoList({}, {status: 'READY'})
 
   const postVideoToFacebook = (_video) => {
-    const accessToken = 'EAABjktqNhF8BAA2gXKUBjqO4vmPELlVHk6lltv1PSDRtwatkPI3x5609VwKIY7iuCR4WSybueYg2JCt8EZCOVxdgfq6fOYkA1ZAYVptLaWtXzhLD67zz2FE5GrVZCvqsQPJuHWVTAsXyNXxHZAt9Y1HJ9mZCAPt1Ys6ZC0Ulgc8cOID2gygljmtI2T9RkwHchtZBTMZCMcJJQAZDZD'
+    const accessToken = 'EAABjktqNhF8BAF3tSknynNEqFFBpp5V0QzJh3gKJjvilLCpEGazIZAisAG1nsjpBeHT9g4rjSSq5KPd1zashVRZCjwlyBVTTzn54dga6SrN9sQukj6NGl4yIs3NdbeN32ZCuMZAwNVpna8UUQMWDIszDEN0IZBsxHK3ILlZCiwwtFRk2cENQUvWGdM78jbWD8ZD'
     const pageId = '1701611166801933'
-
     const {title, newTitle, description, newDescription, originThumb, s3Source, editedSource} = _video
-
-    // console.log('title: ', title)
 
     const payload = {
       title: newTitle,
-      description: newDescription,
+      description: newDescription || newTitle,
       picture: originThumb
     }
 
     const videoUrl = editedSource || s3Source
-    
-
-
     return videoPost (accessToken, pageId, videoUrl, payload) 
   }
 
-
+  const updatePublishedDB = (videoId, publishedVideoId) => {
+    const condition = {_id: videoId}
+    const payload = {
+      status: 'PUBLISHED', 
+      publishedFbId: publishedVideoId
+    }
+    
+    return videoUpdate(condition, payload)
+  }
 
   const video = (await getPublishVideo())[0]
-  const publishedVideoId = await postVideoToFacebook(video)
 
-  console.log('publishedVideoId: ', publishedVideoId)
+  const publishedVideoId = (await postVideoToFacebook(video)).id
 
-//   updatePublishedDB (video, publishedVideoId)
+  await updatePublishedDB(video._id, publishedVideoId)
 
   process.exit()
 }())

@@ -63,10 +63,9 @@ export function videoPost (accessToken, pageId, videoUrl, payload = {})
         headers: {'Content-Type': 'application/json'}
     }
     return fetch(url, option)
-           .then(res => {
-             res.json()
-           },
-            err => console.error(err)
+           .then(
+             res => res.json()
+            ,err => console.error(err)
           )
 }
 
