@@ -5,6 +5,7 @@ const Schema = require('mongoose').Schema
 //* _*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 var VideoObject = new Schema({
   fbId: { type: String, required: true },
+  publishedFbId: { type: String },
   fbPageId: { type: String, required: true },
   title: { type: String },
   newTitle: { type: String },
