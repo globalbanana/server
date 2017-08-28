@@ -6,21 +6,35 @@ import {initDB, videoList, videoUpdate} from '../module/dataBase';
   initDB()
   await getAccessToken()
 
-  const getPublishedVideo =() => videoList({limit: 100}, {status: undefined})
+  let count = 0
 
-  const turnPUBLISHEDtoREADY = (videoId) => {
-    const condition = {_id: videoId}
-    const payload = {
-      status: 'READY', 
-    }
-    return videoUpdate(condition, payload)
-  }
+  const process100Video = async () => {
 
-  const videos = (await getPublishedVideo())
+    const getPublishedVideo =() => videoList({limit: 100}, {status: undefined})
   
-  for(let _v of videos ){
-    await turnPUBLISHEDtoREADY(_v._id)
+    const turnPUBLISHEDtoREADY = (videoId) => {
+      const condition = {_id: videoId}
+      const payload = {
+        status: 'EDITING', 
+      }
+      return videoUpdate(condition, payload)
+    }
+  
+    const videos = (await getPublishedVideo())
+    
+    for(let _v of videos ){
+      console.log(`${count} : video is updated .`)
+      await turnPUBLISHEDtoREADY(_v._id)
+      count += 1
+    }
+
+    if(videos.length < 100)
+      return
+    else
+      await process100Video()
   }
+
+  await process100Video()
 
   process.exit()
 }())
