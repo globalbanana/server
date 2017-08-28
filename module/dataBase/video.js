@@ -33,7 +33,6 @@ var VideoObject = new Schema({
 
 // middleware
 VideoObject.pre('save', function (next) {
-//   notify(this.get('email'));
   this.status = 'EDITING'
   next()
 })
