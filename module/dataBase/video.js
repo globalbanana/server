@@ -37,6 +37,11 @@ VideoObject.pre('save', function (next) {
   next()
 })
 
+VideoObject.pre('findOneAndUpdate', function (next) {
+    this.updatedAt = Date.now();
+    next()
+  })
+
 const assignKeyValue  = (from, to) => {
   Object.keys(from).forEach(
     (key) => {
