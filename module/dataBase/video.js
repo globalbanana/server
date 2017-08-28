@@ -33,11 +33,14 @@ var VideoObject = new Schema({
 
 // middleware
 VideoObject.pre('save', function (next) {
-//   notify(this.get('email'));
-  // console.log('pre findOneAndUpdate ....')
-  this.updatedAt = Date.now();
+  this.status = 'EDITING'
   next()
 })
+
+VideoObject.pre('findOneAndUpdate', function (next) {
+    this.updatedAt = Date.now();
+    next()
+  })
 
 const assignKeyValue  = (from, to) => {
   Object.keys(from).forEach(
