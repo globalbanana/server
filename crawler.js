@@ -2,6 +2,8 @@
 import {getAccessToken, getVideoList, getPageDetail} from './module/facebook';
 import {uploadLocalFile} from './module/s3';
 import {initDB, videoCreate, videoList} from './module/dataBase';
+require('newrelic');
+
 // const downloadHelp = require('./module/downloadHelp');
 const fileNameHelp = require('./module/utils/fileName');
 const fileHelp = require('./module/fileHelp');

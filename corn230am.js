@@ -1,4 +1,7 @@
 var cron = require('node-cron');
+require('newrelic');
+
+console.log('Cron job is ready 2:30am:')
 
 cron.schedule('48 11 * * *', function(){
     var shell = require('./module/childProcess/child_helper');
