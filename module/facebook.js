@@ -1,4 +1,6 @@
 import fetch from 'isomorphic-fetch'
+var queryString = require('query-string');
+
 const clientId = process.env.GRAPHAPI_CLIENT_ID
 const secret = process.env.GRAPHAPI_SECRET
 
