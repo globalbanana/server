@@ -30,6 +30,7 @@
     "download-url": "^2.0.3",
     "isomorphic-fetch": "^2.2.1",
     "mongoose": "^4.11.5",
+    "newrelic": "^2.2.0",
     "node-cron": "^1.2.1"
   },
   "devDependencies": {
