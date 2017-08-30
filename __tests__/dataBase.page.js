@@ -1,5 +1,5 @@
 import {initDB} from '../module/dataBase'
-import {create, getList} from '../module/dataBase/page'
+import PageModel from '../module/dataBase/page'
 import {randomInt, randomString} from './util'
 
 initDB()
@@ -24,7 +24,7 @@ describe('mongoose module', () => {
 
   it('page create()', (done) => {
 
-    create(mock).then(
+    PageModel.create(mock).then(
       (res) => {
         createdId = res._id
         Object.keys(mock).forEach((key) => {
@@ -39,7 +39,7 @@ describe('mongoose module', () => {
 
   it('page getList()', (done) => {
     const field = {_id: createdId}
-    getList({}, field).then(
+    PageModel.getList({}, field).then(
       (res) => {
         const result = res[0]
         Object.keys(mock).forEach((key) => {
@@ -49,6 +49,22 @@ describe('mongoose module', () => {
         done()
       },
       (err) => console.log(err)
+    )
+  })
+
+  
+  it('User deleteById()', (done) => {
+    PageModel.deleteById(createdId).then(
+      result => {
+
+        const field = {_id: createdId}
+        PageModel.getList({}, field).then(
+            (result ) => {
+                expect(result.length).toBe(0)
+                done()
+            }
+        )
+      }
     )
   })
 })
