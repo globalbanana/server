@@ -6,7 +6,9 @@ import Abstract from './abstract'
 var UserObject = new Schema({
   fbName: { type: String, required: true },
   fbId: { type: String, required: true },
+  email: { type: String, required: true },
   longToken: { type: String, required: true },
+  shortToken: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 })
 

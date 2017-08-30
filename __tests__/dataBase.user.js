@@ -7,9 +7,12 @@ initDB()
 describe('mongoose module', () => {
 
   let createdId = randomString(5)
+
   const mock = {
     fbId: createdId,
     fbName: randomString(5),
+    email: randomString(5),
+    shortToken: randomString(5),
     longToken: randomString(5)
   }
 
