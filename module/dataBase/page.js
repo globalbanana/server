@@ -1,4 +1,5 @@
 const Schema = require('mongoose').Schema
+import Abstract from './abstract'
 
 //* _*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 // Schema Definition
@@ -11,7 +12,9 @@ var PageObject = new Schema({
   description: { type: String },
   location: { type: Object },
   fanCount: {type: Number},
+  talkAboutCount: {type: Number},
   picture: { type: String,},
+  feq: { type: String,},  //DAY, WEEK, MONTH
   createdAt: { type: Date, default: Date.now },
 })
 
@@ -21,57 +24,6 @@ PageObject.pre('save', function (next) {
     next()
 })
 
+const PageModel = new Abstract('User' , PageObject)
 
-const assignKeyValue  = (from, to) => {
-  Object.keys(from).forEach(
-    (key) => {
-      to[key] = from[key]
-    }
-  )
-}
-
-export function create (payload = {}) {
-  return new Promise((resolve, reject) => {
-    const _mongoose = global.DBInstance
-    const PageInstance = _mongoose.model('Page', PageObject)
-    const instance = new PageInstance()
-
-    assignKeyValue(payload, instance)
-
-    instance.save(function (err, obj) {
-      if (err) reject(err)
-      else {
-        resolve(obj)
-      }
-    })
-  })
-}
-
-
-export function getList (payload = {}, field={}, exist={}) {
-  return new Promise((resolve, reject) => {
-    const _mongoose = global.DBInstance
-
-    const _payload = {
-      limit: 10,
-      skip: 0,
-      sort: '-date',
-      ...payload
-    }
-
-    const PageQuery = _mongoose.model('Page', PageObject)
-    const query = PageQuery.find(field, null, _payload)
-
-    Object.keys(exist).forEach(
-      (key) => {
-        query.where(key).exists(exist[key])
-      }
-    )
-
-
-    query.exec(function (err, vObjList) {
-      if (err) reject(err)
-      resolve(vObjList)
-    })
-  })
-}
+export default PageModel
