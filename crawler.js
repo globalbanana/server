@@ -6,7 +6,6 @@ require('newrelic');
 
 // const downloadHelp = require('./module/downloadHelp');
 const fileNameHelp = require('./module/utils/fileName');
-const fileHelp = require('./module/fileHelp');
 const downloadAPI = require('download-url');
 
 (async function () {
@@ -72,7 +71,6 @@ const downloadAPI = require('download-url');
 
   for (let i = 0; i < good5link.length; i++) {
     try{
-
         const videoObject = good5link[i]
         const {id, title, picture, description, source, likes, length} = videoObject
         const fileName = fileNameHelp.urlFileName(source)
@@ -82,7 +80,7 @@ const downloadAPI = require('download-url');
 
         const s3Source = await uploadLocalFile(`${path}/${fileName}`)
         console.log(`       Uploaded is completed, going to delete: `, s3Source)
-        await fileHelp.delete(`${path}/${fileName}`)
+        await fileNameHelp.delete(`${path}/${fileName}`)
         console.log(`       Locally delete, going to write DB`)
 
         const payload = {

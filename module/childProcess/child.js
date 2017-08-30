@@ -4,7 +4,7 @@
 // var url2 = 'https://www.npmjs.com'
 // var url3 = 'https://www.waheng.co/'
 
-var urls = require('../../pageId.json')
+var urls = require('../../pageId/day.json')
 
 var shell = require('./child_helper');
 
