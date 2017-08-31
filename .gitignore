@@ -10,6 +10,9 @@ env.sh
 download/*
 config.json
 pageId.json
+cloneDBtoDevDB.sh
+syncEC2ByPem.sh
+syncOpenhouse.sh
 
 # Runtime data
 pids
