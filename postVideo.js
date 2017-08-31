@@ -11,13 +11,17 @@ import UserModel from './module/dataBase/user'
 
   const getOneReadyVideo = async () => (await videoList({}, {status: 'READY'}))[0]
 
+  const genDescriptionWithSource = (des, fbId) => `${des}
+  來源: https://facebook.com/${fbId}`
+
   const postVideoToFacebook = (_video, longtoken) => {
     const pageId = process.env.FB_PUBLISH_PAGE_ID
-    const {title, newTitle, description, newDescription, originThumb, s3Source, editedSource} = _video
+    const {title, newTitle, description, newDescription, originThumb, s3Source, editedSource, fbId} = _video
+    const _des = genDescriptionWithSource(newDescription || newTitle, fbId)
 
     const payload = {
       title: newTitle,
-      description: newDescription || newTitle,
+      description: _des,
       picture: originThumb
     }
 
@@ -44,8 +48,8 @@ import UserModel from './module/dataBase/user'
 
   console.log(`     Video is posted on FB: ${publishedVideoId}`)
 
-  await updatePublishedDB(video._id, publishedVideoId)
+  // await updatePublishedDB(video._id, publishedVideoId)
+  // console.log(`     DB updated ... `)
 
-  console.log(`     DB updated ... `)
   process.exit()
 }())

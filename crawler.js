@@ -17,6 +17,9 @@ const downloadAPI = require('download-url');
   console.log('going to crawler page: ', pageId)
 
   const pageObject = await getPageDetail(pageId)
+  if(!pageObject) console.log('Fetch Data from FB is undefined, check FB access_token ....')
+
+
   const fbPageId = pageObject.id
   const fbPageName = pageObject.name
 
