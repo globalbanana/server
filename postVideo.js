@@ -48,8 +48,8 @@ import UserModel from './module/dataBase/user'
 
   console.log(`     Video is posted on FB: ${publishedVideoId}`)
 
-  // await updatePublishedDB(video._id, publishedVideoId)
-  // console.log(`     DB updated ... `)
+  await updatePublishedDB(video._id, publishedVideoId)
+  console.log(`     DB updated ... `)
 
   process.exit()
 }())
