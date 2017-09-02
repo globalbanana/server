@@ -11,7 +11,7 @@ var VideoObject = new Schema({
   newTitle: { type: String },
   description: { type: String },
   newDescription: { type: String },
-  status: { type: String }, //READY, EDITING, PUBLISHED, DELETE  
+  status: { type: String }, //READY, NEW, EDITING, PUBLISHED, DELETE  
   publishedAt: { type: Date},
   isReady: { type: Boolean },
   source: { type: String, required: true },
@@ -33,7 +33,7 @@ var VideoObject = new Schema({
 
 // middleware
 VideoObject.pre('save', function (next) {
-  this.status = 'EDITING'
+  this.status = 'NEW'
   next()
 })
 
