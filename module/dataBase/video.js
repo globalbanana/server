@@ -123,12 +123,12 @@ export function getDetail (id) {
 }
 
 
-export function count () {
+export function count (payload = {}) {
   return new Promise((resolve, reject) => {
     const _mongoose = global.DBInstance
     const Video = _mongoose.model('Video', VideoObject)
 
-    Video.count({}, function (err, count) {  
+    Video.count(payload, function (err, count) {  
       if (err) reject(err)
       resolve(count)
     });
