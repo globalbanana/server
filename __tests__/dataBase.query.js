@@ -49,6 +49,35 @@ describe('mongoose module', () => {
     )
   })
 
+  it('Condition: status:NEW videoList()', (done) => {
+    const field = {status: 'NEW'}
+    videoList({}, field).then(
+      result => {
+        result.forEach( (item)=> {
+            expect(item.status).toBe('NEW')
+        })
+        done()
+      }
+    )
+  })
+  it('Condition: status:EDITING videoList()', (done) => {
+    const payload = { limit: 10, skip: 0, sort: '-createdAt' }    
+    const field = { status: 'NEW' } 
+    const exist = {}
+
+    videoList(payload, field, exist).then(
+      result => {
+        console.log(' ---- result: ', result)
+        result.forEach( (item)=> {
+          console.log(' ---- item: ', item)
+            expect(item.status).toBe('EDITING')
+        })
+        done()
+      }
+    )
+  })
+
+
   it('Sortby: videoList()', (done) => {
     const field = {fbPageId: FB_PAGEID}
     const payload = { sort: '-createdAt'}
@@ -65,26 +94,26 @@ describe('mongoose module', () => {
     )
   })
 
-  it('Not Equal: videoList()', (done) => {
+//   it('Not Equal: videoList()', (done) => {
 
-    const field = {
-        status: {$ne : "DELETED"}
-    }
+//     const field = {
+//         status: {$ne : "DELETED"}
+//     }
 
-    const payload = {
-        limit: 1000
-    }
+//     const payload = {
+//         limit: 1000
+//     }
 
-    videoList(payload, field).then(
-      result => {
+//     videoList(payload, field).then(
+//       result => {
 
-        result.forEach( obj=> {
-            expect(obj.status).not.toBe('DELETED')            
-        })
-        done()
-      }
-    )
-  })
+//         result.forEach( obj=> {
+//             expect(obj.status).not.toBe('DELETED')            
+//         })
+//         done()
+//       }
+//     )
+//   })
 
   it('Exist: videoList()', (done) => {
     videoList({}, {}, {newTitle: false}).then(
