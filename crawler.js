@@ -28,20 +28,19 @@ const downloadAPI = require('download-url');
 
   const path = './download'
 
-  var get5GoodLink = async function(__videoList, skip, goodVideoCount, failCount = 0, fbNextPage){
+  var get20GoodLink = async function(__videoList, skip, goodVideoCount, failCount = 0, fbNextPage){
 
-    const limit = 5 
-    const fbResponse = (fbNextPage)? 
-            await getVideoList(null,null,fbNextPage)
-            :await getVideoList(pageId, limit)
-    const fbVideoList = fbResponse.data || []
+    const limit = 20 
+    const fbResponse = (fbNextPage)? await getVideoList(null,null,fbNextPage):await getVideoList(pageId, limit)
     fbNextPage = (fbResponse.paging)?fbResponse.paging.next:null
     
+    const fbVideoList = fbResponse.data || []
+
     for(let _video of fbVideoList){
-      const {id, length} = _video;
+      const {id, length} = _video
       const isVObjExisted = (await videoList({}, {fbId: id})).length
 
-      if(goodVideoCount >=5 ){
+      if(goodVideoCount >=20 ){
         return __videoList
       }
       else if(isVObjExisted >0 ){
@@ -53,7 +52,9 @@ const downloadAPI = require('download-url');
         console.log('Video is longer than 2min : SKIP: ', id)
       }
       else {
-        goodVideoCount = goodVideoCount + 1        
+        goodVideoCount = goodVideoCount + 1  
+        _video.likeCount = _video.likes.summary.total_count
+        delete _video['likes'];         
         __videoList.push(_video)
       }
     }
@@ -62,16 +63,21 @@ const downloadAPI = require('download-url');
     if(!fbNextPage){
       return __videoList
     }
-    else if (goodVideoCount <5 ){
-      return (await get5GoodLink(__videoList, skip+1, goodVideoCount, failCount, fbNextPage))
+    else if (goodVideoCount <20 ){
+      return (await get20GoodLink(__videoList, skip+1, goodVideoCount, failCount, fbNextPage))
     } else {
       return __videoList
     }
   }
 
 
-  const good5link = await get5GoodLink([], 0, 0)
+  let good20link = await get20GoodLink([], 0, 0)
 
+  console.log('fetch 20 good links is done: ')
+  const compareLikeCount = (a,b) => (b.likeCount - a.likeCount)
+
+  const good5link = good20link.sort(compareLikeCount).slice(0,5)
+  
   for (let i = 0; i < good5link.length; i++) {
     try{
         const videoObject = good5link[i]
