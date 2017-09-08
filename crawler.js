@@ -54,7 +54,9 @@ const downloadAPI = require('download-url');
       else {
         goodVideoCount = goodVideoCount + 1  
         _video.likeCount = _video.likes.summary.total_count
+        _video.commentCount = _video.comments.summary.total_count
         delete _video['likes'];         
+        delete _video['comments'];         
         __videoList.push(_video)
       }
     }
@@ -74,6 +76,7 @@ const downloadAPI = require('download-url');
   let good20link = await get20GoodLink([], 0, 0)
 
   console.log('fetch 20 good links is done: ')
+
   const compareLikeCount = (a,b) => (b.likeCount - a.likeCount)
 
   const good5link = good20link.sort(compareLikeCount).slice(0,5)
@@ -81,7 +84,7 @@ const downloadAPI = require('download-url');
   for (let i = 0; i < good5link.length; i++) {
     try{
         const videoObject = good5link[i]
-        const {id, title, picture, description, source, likes, length} = videoObject
+        const {id, title, picture, description, source, likes, length, commentCount, likeCount, created_time} = videoObject
         const fileName = fileNameHelp.urlFileName(source)
 
         console.log(`Downloading the ${i}th file: ${fileName} ......`)
@@ -98,7 +101,9 @@ const downloadAPI = require('download-url');
           description,
           source,
           s3Source,
-          likes,
+          likeCount,
+          commentCount,
+          originCreatedAt: created_time,
           originThumb: picture,
           videoLength: length,
           fbPageId,

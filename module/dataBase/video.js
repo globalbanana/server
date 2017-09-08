@@ -17,11 +17,13 @@ var VideoObject = new Schema({
   source: { type: String, required: true },
   s3Source: { type: String, required: true },
   editedSource: { type: String},
-  likes: { type: Object },
+  likeCount: { type: Number },
+  commentCount: { type: Number },
   videoLength: { type: Object },
   rate: { type: Number },
   fbPageName: { type: String },
   originThumb: { type: String },
+  originCreatedAt: { type: Date, default: Date.now },
   createdAt: { type: Date, default: Date.now },
   buff: Buffer
 })
