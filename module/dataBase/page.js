@@ -14,7 +14,7 @@ var PageObject = new Schema({
   fanCount: {type: Number},
   talkAboutCount: {type: Number},
   picture: { type: String,},
-  feq: { type: String,},  //DAY, WEEK, MONTH
+  feq: { type: String,},  //DAY, WEEK, MONTH, SEARCH_LARGE
   createdAt: { type: Date, default: Date.now },
 })
 
@@ -24,6 +24,6 @@ PageObject.pre('save', function (next) {
     next()
 })
 
-const PageModel = new Abstract('User' , PageObject)
+const PageModel = new Abstract('Page' , PageObject)
 
 export default PageModel

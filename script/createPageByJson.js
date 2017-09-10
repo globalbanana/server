@@ -1,69 +1,63 @@
 
-import weekJson from '../pageId/day.json'
+import dayJson from '../pageId/day.json'
+import weekJson from '../pageId/week.json'
+import saerchLargeJson from '../pageId/saerchLarge.json'
 import {initDB} from '../module/dataBase'
-import {create, getList} from '../module/dataBase/page'
+import PageModel from '../module/dataBase/page'
 
 import {getPageDetail as getPageDetailFromFacebook, getAccessToken} from'../module/facebook'
 
 (async function () {
     initDB()
     await getAccessToken()
-    const _feq = 'DAY'
-    const createPageObject = async (_pageObj) => {
+
+    const isPageExisted = async (pageId) => {
+        const field = {fbPageId: pageId}
+        return  ((await PageModel.getList({}, field)).length >0)
+    }
+
+    const createPageObject = async (_pageObj, _feq) => {
+        if(!_pageObj.name)
+            return
+            
         const _t = {
             ..._pageObj,
-            picture: _pageObj.picture.data.url,
+            picture: ( _pageObj.picture)?_pageObj.picture.data.url: null,
             fbName: _pageObj.name,
             fbPageId: _pageObj.id,
             fanCount: _pageObj.fan_count,
             talkAboutCount: _pageObj.talking_about_count,
             feq: _feq
         }
-        const _result = await create(_t)
-        console.log(`${_pageObj.name} is created : `, _result)
-        return 
+        const _result = await PageModel.create(_t)
+        return _result
     }
 
-
-    for(let pageName of weekJson){
+    const createPageObjectByPageName = async (pageName, _feq) => {
         const pageObj = await getPageDetailFromFacebook(pageName)
-
-        const field = {fbPageId: pageObj.id}
-        const isPageExisted = ((await getList({}, field)).length >0)
-
-        if(isPageExisted)
+        const _isPageExisted = await isPageExisted(pageObj.id)
+        if(_isPageExisted)
             console.log('SKIP: ', pageObj.name , ' is alreayd in DB')
         else {
-            await createPageObject(pageObj)
+            await createPageObject(pageObj, )
+            if(pageObj.name)
+                console.log(`${pageObj.name} is created : `)
+            else 
+                console.log(`${pageObj.name} create failed ... `)            
         }
+    }
+
+    for(let pageName of dayJson){
+        await createPageObjectByPageName(pageName, 'DAY')
+    }
+
+    for(let pageName of weekJson){
+        await createPageObjectByPageName(pageName, 'WEEK')
+    }
+
+    for(let pageName of saerchLargeJson){
+        await createPageObjectByPageName(pageName, 'SEARCH_LARGE')
     }
 
     process.exit()
 }())
-
-
-// import {getAccessToken, videoPost} from '../module/facebook';
-// import {initDB, videoList, videoUpdate} from '../module/dataBase';
-
-// (async function () {
-//   initDB()
-//   await getAccessToken()
-
-//   const getPublishedVideo =() => videoList({}, {status: 'PUBLISHED'})
-
-//   const turnPUBLISHEDtoREADY = (videoId) => {
-//     const condition = {_id: videoId}
-//     const payload = {
-//       status: 'READY', 
-//     }
-//     return videoUpdate(condition, payload)
-//   }
-
-//   const videos = (await getPublishedVideo())
-  
-//   for(let _v of videos ){
-//     await turnPUBLISHEDtoREADY(_v._id)
-//   }
-
-//   process.exit()
-// }())
