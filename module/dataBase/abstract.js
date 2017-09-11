@@ -55,6 +55,32 @@ class Abstract {
         })
     }
 
+    updateById (id, payload) {
+        return new Promise((resolve, reject) => {
+            const _mongoose = global.DBInstance
+            const Intance = _mongoose.model(this.modelName, this.schemaObject)
+            
+            Intance.findOneAndUpdate({_id: id},  payload, function (err, vObj) {  
+                if (err) reject(err)
+                resolve(vObj)
+            });
+        
+        })
+    }
+
+    count (payload) {
+        return new Promise((resolve, reject) => {
+            const _mongoose = global.DBInstance
+            const Intance = _mongoose.model(this.modelName, this.schemaObject)
+            
+            Intance.count(payload, function (err, count) {  
+                if (err) reject(err)
+                resolve(count)
+            });
+        
+        })
+    }
+
     deleteById (id) {
         return new Promise((resolve, reject) => {
             const _mongoose = global.DBInstance

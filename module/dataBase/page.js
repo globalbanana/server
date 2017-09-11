@@ -12,6 +12,8 @@ var PageObject = new Schema({
   description: { type: String },
   location: { type: Object },
   fanCount: {type: Number},
+  videoCount: {type: Object}, //READY, NEW, EDITING, PUBLISHED, DELETED  
+  videoCountHistory: [],      //READY, NEW, EDITING, PUBLISHED, DELETED  
   talkAboutCount: {type: Number},
   picture: { type: String,},
   feq: { type: String,},  //DAY, WEEK, MONTH, SEARCH_LARGE

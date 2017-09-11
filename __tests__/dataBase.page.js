@@ -52,8 +52,28 @@ describe('mongoose module', () => {
     )
   })
 
+  it('page updateById()', (done) => {
+    const newFbName = randomString(10)
+
+    PageModel.updateById(createdId,{fbName: newFbName})
+    .then(() => {
+      return PageModel.getList({}, {_id: createdId})
+    })
+    .then( res => {
+      expect(res[0].fbName).toBe(newFbName)
+      done()
+    })
+  })
+
+  it('page count()', (done) => {
+    PageModel.count({_id: createdId})
+    .then(count => {
+      expect(count).toBe(1)
+      done()
+    })
+  })
   
-  it('User deleteById()', (done) => {
+  it('page deleteById()', (done) => {
     PageModel.deleteById(createdId).then(
       result => {
 
