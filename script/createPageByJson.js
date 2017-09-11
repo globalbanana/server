@@ -39,7 +39,7 @@ import {getPageDetail as getPageDetailFromFacebook, getAccessToken} from'../modu
         if(_isPageExisted)
             console.log('SKIP: ', pageObj.name , ' is alreayd in DB')
         else {
-            await createPageObject(pageObj, )
+            await createPageObject(pageObj, _feq)
             if(pageObj.name)
                 console.log(`${pageObj.name} is created : `)
             else 
