@@ -7,12 +7,25 @@ initDB()
 describe('mongoose module', () => {
 
   let createdId = randomString(5)
+
+  const videoCountObj = {
+    total: 0,
+    new: 0,
+    editing: 0,
+    ready: 0,
+    published: 0,
+    deleted: 0
+}
+
+
   const mock = {
     fbPageId: randomString(5),
     fbName: randomString(5),
     about: randomString(5),
     category: randomString(5),
     description: randomString(5),
+    videoCount: videoCountObj,
+    videoCountHistory: [videoCountObj],
     location: {
         "city": randomString(5),
         "country": randomString(5),
@@ -28,6 +41,7 @@ describe('mongoose module', () => {
       (res) => {
         createdId = res._id
         Object.keys(mock).forEach((key) => {
+          if(key !== 'location' && key !== 'videoCount' && key !== 'videoCountHistory')            
             expect(mock[key]).toBe(res[key])
         })
         done()
@@ -43,9 +57,15 @@ describe('mongoose module', () => {
       (res) => {
         const result = res[0]
         Object.keys(mock).forEach((key) => {
-          if(key !== 'location')
+          if(key !== 'location' && key !== 'videoCount' && key !== 'videoCountHistory')
             expect(mock[key]).toBe(result[key])
         })
+
+        //check result.videoCount
+        Object.keys(mock.videoCount).forEach((key) => {
+            expect(mock.videoCount[key]).toBe(result.videoCount[key])
+        })
+
         done()
       },
       (err) => console.log(err)
