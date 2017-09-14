@@ -6,11 +6,12 @@ import Abstract from './abstract'
 var IGObject = new Schema({
   igId: { type: String, required: true },
   username: { type: String, required: true },
-  profile_picture: { type: String, required: true },
-  full_name: { type: String, required: true },
-  bio: { type: String, required: true },
-  website: { type: String, required: true },
-  is_business: { type: String, required: true },
+  profile_picture: { type: String},
+  full_name: { type: String},
+  bio: { type: String},
+  website: { type: String},
+  is_business: { type: String},
+  access_token: { type: String},
   createdAt: { type: Date, default: Date.now },
 })
 
@@ -19,6 +20,6 @@ IGObject.pre('save', function (next) {
     next()
 })
 
-const IGModel = new Abstract('User' , IGObject)
+const IGModel = new Abstract('IG' , IGObject)
 
 export default IGModel
