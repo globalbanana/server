@@ -4,6 +4,16 @@ import Abstract from './abstract'
 //* _*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 // Schema Definition
 //* _*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
+
+const countObj = {
+  total: 0,
+  new: 0,
+  editing: 0,
+  ready: 0,
+  published: 0,
+  deleted: 0,
+}
+
 var PageObject = new Schema({
   fbName: { type: String, required: true },
   fbPageId: { type: String, required: true },
@@ -12,7 +22,7 @@ var PageObject = new Schema({
   description: { type: String },
   location: { type: Object },
   fanCount: {type: Number},
-  videoCount: {type: Object}, //READY, NEW, EDITING, PUBLISHED, DELETED  
+  videoCount: {type: Object, default: countObj}, //READY, NEW, EDITING, PUBLISHED, DELETED  
   videoCountHistory: [],      //READY, NEW, EDITING, PUBLISHED, DELETED  
   talkAboutCount: {type: Number},
   picture: { type: String,},
@@ -26,6 +36,10 @@ PageObject.pre('save', function (next) {
     next()
 })
 
+const feqList = ['DAY', 'WEEK', 'MONTH', 'SEARCH_LARGE']
+
 const PageModel = new Abstract('Page' , PageObject)
+
+PageModel.config = {feqList}
 
 export default PageModel

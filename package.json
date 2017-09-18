@@ -7,6 +7,8 @@
     "crawler:all": "node ./module/childProcess/child.js",
     "crawler": "./node_modules/babel-cli/bin/babel-node.js --presets node6 crawler.js",
     "postVideo": "./node_modules/babel-cli/bin/babel-node.js --presets node6 postVideo.js",
+    "countPage": "./node_modules/babel-cli/bin/babel-node.js --presets node6 script/countVideosOfPage.js",    
+    "createPage": "./node_modules/babel-cli/bin/babel-node.js --presets node6 script/createPageById.js",    
     "test": "NODE_ENV=development && source envDev.sh && ./node_modules/jest/bin/jest.js  --coverage",
     "test:watch": "./node_modules/jest/bin/jest.js --watchAll #runs all tests  --cache ",
     "lint:fix": "standard --fix",
