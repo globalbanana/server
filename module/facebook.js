@@ -74,7 +74,7 @@ export function getVideoList (pageId, limit = 10,  nextPage) {
 
 export function getVideoDetail (videoId) {
   const accessToken = process.env.GRAPHAPI_ACCESS_TOKEN
-  const url = `https://graph.facebook.com/v2.10/${videoId}?fields=source,picture&access_token=${accessToken}`
+  const url = `https://graph.facebook.com/v2.10/${videoId}?fields=length,description,title,picture,source,likes.limit(0).summary(true),comments.summary(true),created_time&access_token=${accessToken}`
 
   return fetch(url).then(
       res => res.json()
