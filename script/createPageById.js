@@ -15,9 +15,12 @@ try{
     const pageFeq = process.argv[3]
     const matchFeq =  _pageFeq => _i => _i ===_pageFeq 
 
-    if(!pageId || !pageFeq || !feqList.some(matchFeq(pageFeq)))
+    if(!pageId || !pageFeq)
         throw new Error('Missed required arg: npm run createPage PAGEID FEQ');
 
+    if(!feqList.some(matchFeq(pageFeq)))
+        throw new Error('FRQ does not match any of: ' + feqList);
+    
     initDB()
     await getAccessToken()
 
