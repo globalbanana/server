@@ -5,11 +5,16 @@ import UserModel from './module/dataBase/user'
 
 (async function () {
   initDB()
+
+  const fbId = process.argv[2]
+
   await getAccessToken()
 
   const getNewestToken = async () => (await UserModel.getList({limit:1, sort: '-createdAt'}))[0].longToken
 
-  const getOneReadyVideo = async () => (await videoList({}, {status: 'READY'}))[0]
+  const getOneReadyVideo = async () => (fbId)?
+                                          (await videoList({}, {fbId, status: 'READY'}))[0]:  //if given facebook Id
+                                          (await videoList({}, {status: 'READY'}))[0]         //if not, randomly get one
 
   const genDescriptionWithSource = (des, fbId) => `${des}
   來源: https://facebook.com/${fbId}`
