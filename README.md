@@ -22,3 +22,14 @@ $ npm run test
 
 $ npm run test:watch
 ```
+
+## Crawler
+```
+$ npm run crawler --pageId=LADbible
+```
+
+
+## Corn Job
+```
+$ node corn230am
+```

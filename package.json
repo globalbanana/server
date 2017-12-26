@@ -4,8 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "standard --fix && ./node_modules/jest/bin/jest.js  --coverage",
-    "test:watch": "standard --fix && ./node_modules/jest/bin/jest.js --watchAll #runs all tests  --cache ",
+    "crawler:all": "./node_modules/babel-cli/bin/babel-node.js --presets node6 crawlerManager.js",
+    "crawler": "./node_modules/babel-cli/bin/babel-node.js --presets node6 crawler.js",
+    "start:cron": "node cronManager.js",
+    "postVideo": "./node_modules/babel-cli/bin/babel-node.js --presets node6 postVideo.js",
+    "countPage": "./node_modules/babel-cli/bin/babel-node.js --presets node6 script/countVideosOfPage.js",
+    "refetchVideoMp4": "./node_modules/babel-cli/bin/babel-node.js --presets node6 script/refetchVideoMp4.js",        
+    "changePageFeq": "./node_modules/babel-cli/bin/babel-node.js --presets node6 script/turnPageFeqFromTo.js",    
+    "createPage": "./node_modules/babel-cli/bin/babel-node.js --presets node6 script/createPageById.js",
+    "test": "NODE_ENV=development && source envDev.sh && ./node_modules/jest/bin/jest.js  --coverage",
+    "test:watch": "./node_modules/jest/bin/jest.js --watchAll #runs all tests  --cache ",
     "lint:fix": "standard --fix",
     "lint": "standard"
   },
@@ -20,11 +28,26 @@
   },
   "homepage": "https://github.com/globalbanana/server#readme",
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1"
+    "aws-sdk": "^2.93.0",
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-node6": "^11.0.0",
+    "colors": "^1.1.2",
+    "download-url": "^2.0.3",
+    "isomorphic-fetch": "^2.2.1",
+    "js-meter": "^1.1.2",
+    "mongoose": "^4.11.5",
+    "newrelic": "^2.2.0",
+    "node-cron": "^1.2.1",
+    "query-string": "^5.0.0"
   },
   "devDependencies": {
+    "babel-core": "^6.25.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-2": "^6.24.1",
     "jest": "^20.0.4",
+    "downloadable": "^1.0.0",
     "standard": "^10.0.2"
   },
   "standard": {
@@ -37,6 +60,15 @@
       "afterEach",
       "it",
       "expect"
+    ]
+  },
+  "engines": {
+    "node": "^8.1.2",
+    "npm": "5.2.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "./__tests__/mock.json"
     ]
   }
 }

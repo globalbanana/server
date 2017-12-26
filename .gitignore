@@ -5,8 +5,14 @@ npm-debug.log*
 
 Dockerfile
 setEnvVal.sh
+envDev.sh
 env.sh
-
+download/*
+config.json
+pageId.json
+cloneDBtoDevDB.sh
+syncEC2ByPem.sh
+syncOpenhouse.sh
 
 # Runtime data
 pids
@@ -41,3 +47,5 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+yarn.lock
