@@ -6,6 +6,7 @@
   "scripts": {
     "crawler:all": "./node_modules/babel-cli/bin/babel-node.js --presets node6 crawlerManager.js",
     "crawler": "./node_modules/babel-cli/bin/babel-node.js --presets node6 crawler.js",
+    "start:cron": "node cronManager.js",
     "postVideo": "./node_modules/babel-cli/bin/babel-node.js --presets node6 postVideo.js",
     "countPage": "./node_modules/babel-cli/bin/babel-node.js --presets node6 script/countVideosOfPage.js",
     "refetchVideoMp4": "./node_modules/babel-cli/bin/babel-node.js --presets node6 script/refetchVideoMp4.js",        
